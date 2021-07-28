@@ -1,3 +1,11 @@
+# React TODO App
+
+## TODO
+- check button functinality
+- check empty input
+- delete button for every element
+- add styling: bootstrap etc
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
