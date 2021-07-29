@@ -1,11 +1,23 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
-import Todo from "./Todo";
-import FilterButton from "./FilterButton";
+import Todo from "../../components/Todo";
+import FilterButton from "../../components/FilterButton";
 
-export default function Content() {
-  const [text, setText] = useState("");
-  const [todos, setTodos] = useState([]);
+import {
+  addTodo,
+  removeTodo,
+  selectTodo,
+  setInputValue,
+  selectInputValue,
+  toggleTodo,
+} from "./todoListSlice";
+
+export default function TodoList() {
+  const todos = useSelector(selectTodo);
+  const inputValue = useSelector(selectInputValue);
+  const dispatch = useDispatch();
+
   let noChecked = 0;
   const FILTER_MAP = {
     all: () => true,
@@ -16,44 +28,24 @@ export default function Content() {
   const [filter, setFilter] = useState(FILTER_KEYS[0]);
   const filterList = FILTER_KEYS.map((name) => (
     <FilterButton
-      active={filter == name}
+      active={filter === name}
       key={name}
       name={name}
       setFilter={setFilter}
     />
   ));
 
-  todos.forEach((t) => t.checked && noChecked++);
-
-  function handleChange(e) {
-    setText(e.target.value);
-  }
-
-  function toggleTodo(id) {
-    const updatedTodos = todos.map((t) => {
-      if (id === t.id) {
-        return { ...t, checked: !t.checked };
-      }
-      return t;
-    });
-    setTodos(updatedTodos);
-  }
+  noChecked = todos.filter((t) => t.checked).length;
 
   function handleSubmit(e) {
     e.preventDefault();
     const newTodo = {
       id: "todo-" + nanoid(),
-      text: text,
+      text: inputValue,
       checked: false,
     };
-    // console.log(`${newTodo.text} added`);
-    setTodos([...todos, newTodo]);
-    setText("");
-  }
-
-  function removeTodo(id) {
-    const updatedTodos = todos.filter((t) => id !== t.id);
-    setTodos(updatedTodos);
+    dispatch(addTodo(newTodo));
+    dispatch(setInputValue(""));
   }
 
   const todoList = todos
@@ -64,15 +56,19 @@ export default function Content() {
         key={t.id}
         text={t.text}
         checked={t.checked}
-        toggleTodo={toggleTodo}
-        removeTodo={removeTodo}
+        toggleTodo={() => dispatch(toggleTodo(t.id))}
+        removeTodo={() => dispatch(removeTodo(t.id))}
       />
     ));
 
   return (
     <div className="App-body">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" value={text} onChange={handleChange}></input>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => dispatch(setInputValue(e.target.value))}
+        ></input>
         <button type="submit">Add</button>
       </form>
       <div>{filterList}</div>
