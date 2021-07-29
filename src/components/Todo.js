@@ -2,10 +2,20 @@ import React from "react";
 
 export default function Todo(props) {
   return (
-    <li>
-      <input type="checkbox" defaultChecked={props.checked}></input>
+    <li className="App-Todo-item">
+      <input
+        type="checkbox"
+        defaultChecked={props.checked}
+        onChange={() => props.toggleTodo(props.id)}
+      ></input>
       {props.text}
-      {/* <button className="App-Todo-delete" type="button">❌</button> */}
+      <button
+        className="App-Todo-delete"
+        type="button"
+        onClick={() => props.removeTodo(props.id)}
+      >
+        ❌
+      </button>
     </li>
   );
 }

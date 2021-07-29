@@ -29,8 +29,8 @@
   /* min-height: 80vh; */
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
+  align-items: center;
+  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;
 }
@@ -38,10 +38,16 @@
 .App-todolist {
   text-align:left;
   margin: 3vh 10vh;
+  min-width: 60vh;
+  max-width: 100vh;
 }
 
 .App-Todo-delete {
   float: right;
+}
+
+.App-Todo-item {
+  margin: 1vh;
 }
 
 .App-link {
