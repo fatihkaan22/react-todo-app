@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Todo(props) {
   return (
-    <li className="App-Todo-item">
+    <div className="App-Todo-item">
       <input
         type="checkbox"
         defaultChecked={props.checked}
@@ -16,6 +16,6 @@ export default function Todo(props) {
       >
         ❌
       </button>
-    </li>
+    </div>
   );
 }

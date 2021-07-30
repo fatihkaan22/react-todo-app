@@ -72,7 +72,7 @@ export default function TodoList() {
         <button type="submit">Add</button>
       </form>
       <div>{filterList}</div>
-      <ul className="App-todolist">{todoList}</ul>
+      <div className="App-todolist">{todoList}</div>
       <div>
         <p>No itmes: {todos.length}</p>
         <p>No checked: {noChecked}</p>
